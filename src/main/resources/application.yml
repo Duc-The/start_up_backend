@@ -1,0 +1,60 @@
+server:
+  port: 8087
+
+spring:
+  profiles:
+    default: local
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+  application:
+    name: ocop_tourims_platform
+
+  datasource:
+    url: jdbc:postgresql://localhost:5431/ocop_tourism
+    username: ${USERNAME:}
+    password: ${PASSWORD:}
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:account-sequences.sql
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        default_batch_fetch_size: 100
+
+  mongodb:
+    uri: ${URL_MONGO:}
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+
+
+map4d:
+  route:
+    base-url: https://api.map4d.vn
+    api-key: ${API-KEY:}
+
+secret-key:
+  access-key: ${ACCESS_KEY:}
+  refresh-key: ${REFRESH_KEY:}
+
+
+
+cloudinary:
+  folder-users: ${FOLDER_USERS}
+  cloud-name: ${CLOUDINARY_CLOUD_NAME:}
+  api-key: ${CLOUDINARY_API_KEY:}
+  api-secret: ${CLOUDINARY_API_SECRET:}
+
+

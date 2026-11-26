@@ -1,0 +1,2102 @@
+{
+  "info": {
+    "name": "OCOP GO - Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Đọc management-api.md. Điền UUID và version mới nhất; không chạy cả collection với dữ liệu thật. Các thao tác ghi có tác dụng thật."
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8086/api/v1/management",
+      "type": "string"
+    },
+    {
+      "key": "apiBase",
+      "value": "http://localhost:8086/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "email",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "businessId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "areaId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "poiId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "productId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "productTypeId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "certificationId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "storyId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "eventId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "tourId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "listingId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "orderId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "itemId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "reviewId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "mediaId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "importId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "catalogId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "version",
+      "value": "0",
+      "type": "string"
+    },
+    {
+      "key": "fromStopId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "toStopId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Xác thực",
+      "item": [
+        {
+          "name": "Đăng nhập",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{apiBase}}/auths/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) pm.collectionVariables.set(\"accessToken\", pm.response.json().data.accessToken);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pois",
+      "item": [
+        {
+          "name": "Danh sách",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/pois?page=0&size=20"
+          }
+        },
+        {
+          "name": "Chi tiết",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/pois/{{poiId}}"
+          }
+        },
+        {
+          "name": "Tạo bản nháp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/pois",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"businessId\": \"{{businessId}}\",\n  \"areaId\": \"{{areaId}}\",\n  \"name\": \"Địa điểm OCOP\",\n  \"address\": \"Đà Nẵng\",\n  \"lat\": 16.05,\n  \"lng\": 108.2,\n  \"openingHours\": {},\n  \"categoryIds\": [],\n  \"activityIds\": [],\n  \"amenityIds\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Cập nhật bản nháp",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/pois/{{poiId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"businessId\": \"{{businessId}}\",\n  \"areaId\": \"{{areaId}}\",\n  \"name\": \"Địa điểm OCOP\",\n  \"address\": \"Đà Nẵng\",\n  \"lat\": 16.05,\n  \"lng\": 108.2,\n  \"openingHours\": {},\n  \"categoryIds\": [],\n  \"activityIds\": [],\n  \"amenityIds\": [],\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Gửi duyệt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/pois/{{poiId}}/submit",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Duyệt — ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/pois/{{poiId}}/approve",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Từ chối — ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/pois/{{poiId}}/reject",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"reason\": \"Cần bổ sung thông tin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Lưu trữ",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/pois/{{poiId}}?version={{version}}"
+          }
+        },
+        {
+          "name": "Xem ảnh/video",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/pois/{{poiId}}/media"
+          }
+        },
+        {
+          "name": "Gắn ảnh/video",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/pois/{{poiId}}/media",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"mediaIds\": [\n    \"{{mediaId}}\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "item": [
+        {
+          "name": "Danh sách",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/products?page=0&size=20"
+          }
+        },
+        {
+          "name": "Chi tiết",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/products/{{productId}}"
+          }
+        },
+        {
+          "name": "Tạo bản nháp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"manufacturerPoiId\": \"{{poiId}}\",\n  \"productTypeId\": \"{{productTypeId}}\",\n  \"name\": \"Sản phẩm OCOP\",\n  \"description\": \"Giới thiệu sản phẩm\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Cập nhật bản nháp",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products/{{productId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"manufacturerPoiId\": \"{{poiId}}\",\n  \"productTypeId\": \"{{productTypeId}}\",\n  \"name\": \"Sản phẩm OCOP\",\n  \"description\": \"Giới thiệu sản phẩm\",\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Gửi duyệt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products/{{productId}}/submit",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Duyệt — ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products/{{productId}}/approve",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Từ chối — ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products/{{productId}}/reject",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"reason\": \"Cần bổ sung thông tin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Lưu trữ",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/products/{{productId}}?version={{version}}"
+          }
+        },
+        {
+          "name": "Xem ảnh/video",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/products/{{productId}}/media"
+          }
+        },
+        {
+          "name": "Gắn ảnh/video",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products/{{productId}}/media",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"mediaIds\": [\n    \"{{mediaId}}\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "certifications",
+      "item": [
+        {
+          "name": "Danh sách",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/certifications?page=0&size=20"
+          }
+        },
+        {
+          "name": "Chi tiết",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/certifications/{{certificationId}}"
+          }
+        },
+        {
+          "name": "Tạo bản nháp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/certifications",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{productId}}\",\n  \"type\": \"OCOP\",\n  \"ocopStars\": 4,\n  \"name\": \"Chứng nhận OCOP\",\n  \"certificateNumber\": \"Số chứng nhận\",\n  \"issuingAuthority\": \"Đơn vị cấp\",\n  \"issuedOn\": \"2026-01-01\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Cập nhật bản nháp",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/certifications/{{certificationId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{productId}}\",\n  \"type\": \"OCOP\",\n  \"ocopStars\": 4,\n  \"name\": \"Chứng nhận OCOP\",\n  \"certificateNumber\": \"Số chứng nhận\",\n  \"issuingAuthority\": \"Đơn vị cấp\",\n  \"issuedOn\": \"2026-01-01\",\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Gửi duyệt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/certifications/{{certificationId}}/submit",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Duyệt — ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/certifications/{{certificationId}}/approve",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Từ chối — ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/certifications/{{certificationId}}/reject",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"reason\": \"Cần bổ sung thông tin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Lưu trữ",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/certifications/{{certificationId}}?version={{version}}"
+          }
+        },
+        {
+          "name": "Xem ảnh/video",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/certifications/{{certificationId}}/media"
+          }
+        },
+        {
+          "name": "Gắn ảnh/video",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/certifications/{{certificationId}}/media",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"mediaIds\": [\n    \"{{mediaId}}\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "stories",
+      "item": [
+        {
+          "name": "Danh sách",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/stories?page=0&size=20"
+          }
+        },
+        {
+          "name": "Chi tiết",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/stories/{{storyId}}"
+          }
+        },
+        {
+          "name": "Tạo bản nháp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/stories",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"poiId\": \"{{poiId}}\",\n  \"name\": \"Câu chuyện thương hiệu\",\n  \"slug\": \"cau-chuyen-thuong-hieu\",\n  \"introduction\": \"Giới thiệu\",\n  \"founder\": \"Người sáng lập\",\n  \"sections\": [\n    {\n      \"heading\": \"Quy trình\",\n      \"body\": \"Nội dung\",\n      \"mediaIds\": []\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Cập nhật bản nháp",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/stories/{{storyId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"poiId\": \"{{poiId}}\",\n  \"name\": \"Câu chuyện thương hiệu\",\n  \"slug\": \"cau-chuyen-thuong-hieu\",\n  \"introduction\": \"Giới thiệu\",\n  \"founder\": \"Người sáng lập\",\n  \"sections\": [\n    {\n      \"heading\": \"Quy trình\",\n      \"body\": \"Nội dung\",\n      \"mediaIds\": []\n    }\n  ],\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Gửi duyệt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/stories/{{storyId}}/submit",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Duyệt — ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/stories/{{storyId}}/approve",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Từ chối — ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/stories/{{storyId}}/reject",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"reason\": \"Cần bổ sung thông tin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Lưu trữ",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/stories/{{storyId}}?version={{version}}"
+          }
+        },
+        {
+          "name": "Xem ảnh/video",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/stories/{{storyId}}/media"
+          }
+        },
+        {
+          "name": "Gắn ảnh/video",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/stories/{{storyId}}/media",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"mediaIds\": [\n    \"{{mediaId}}\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "events",
+      "item": [
+        {
+          "name": "Danh sách",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/events?page=0&size=20"
+          }
+        },
+        {
+          "name": "Chi tiết",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/events/{{eventId}}"
+          }
+        },
+        {
+          "name": "Tạo bản nháp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/events",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"poiId\": \"{{poiId}}\",\n  \"name\": \"Sự kiện OCOP\",\n  \"slug\": \"su-kien-ocop\",\n  \"description\": \"Giới thiệu\",\n  \"startsAt\": \"2026-12-01T01:00:00Z\",\n  \"endsAt\": \"2026-12-01T10:00:00Z\",\n  \"organizer\": \"Cơ sở OCOP\",\n  \"registrationUrl\": \"\",\n  \"recurrence\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Cập nhật bản nháp",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/events/{{eventId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"poiId\": \"{{poiId}}\",\n  \"name\": \"Sự kiện OCOP\",\n  \"slug\": \"su-kien-ocop\",\n  \"description\": \"Giới thiệu\",\n  \"startsAt\": \"2026-12-01T01:00:00Z\",\n  \"endsAt\": \"2026-12-01T10:00:00Z\",\n  \"organizer\": \"Cơ sở OCOP\",\n  \"registrationUrl\": \"\",\n  \"recurrence\": \"\",\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Gửi duyệt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/events/{{eventId}}/submit",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Duyệt — ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/events/{{eventId}}/approve",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Từ chối — ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/events/{{eventId}}/reject",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"reason\": \"Cần bổ sung thông tin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Lưu trữ",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/events/{{eventId}}?version={{version}}"
+          }
+        },
+        {
+          "name": "Xem ảnh/video",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/events/{{eventId}}/media"
+          }
+        },
+        {
+          "name": "Gắn ảnh/video",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/events/{{eventId}}/media",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"mediaIds\": [\n    \"{{mediaId}}\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "tours",
+      "item": [
+        {
+          "name": "Danh sách",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/tours?page=0&size=20"
+          }
+        },
+        {
+          "name": "Chi tiết",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/tours/{{tourId}}"
+          }
+        },
+        {
+          "name": "Tạo bản nháp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/tours",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"businessId\": \"{{businessId}}\",\n  \"name\": \"Tour trải nghiệm\",\n  \"slug\": \"tour-trai-nghiem\",\n  \"description\": \"Giới thiệu\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Cập nhật bản nháp",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/tours/{{tourId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"businessId\": \"{{businessId}}\",\n  \"name\": \"Tour trải nghiệm\",\n  \"slug\": \"tour-trai-nghiem\",\n  \"description\": \"Giới thiệu\",\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Gửi duyệt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/tours/{{tourId}}/submit",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Duyệt — ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/tours/{{tourId}}/approve",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Từ chối — ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/tours/{{tourId}}/reject",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"reason\": \"Cần bổ sung thông tin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Lưu trữ",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/tours/{{tourId}}?version={{version}}"
+          }
+        },
+        {
+          "name": "Xem ảnh/video",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/tours/{{tourId}}/media"
+          }
+        },
+        {
+          "name": "Gắn ảnh/video",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/tours/{{tourId}}/media",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"mediaIds\": [\n    \"{{mediaId}}\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cơ sở và thành viên",
+      "item": [
+        {
+          "name": "Danh sách",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/businesses"
+          }
+        },
+        {
+          "name": "Chi tiết",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/businesses/{{businessId}}"
+          }
+        },
+        {
+          "name": "Tạo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/businesses",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Cơ sở OCOP\",\n  \"introduction\": \"Giới thiệu\",\n  \"representative\": \"Người đại diện\",\n  \"phone\": \"0900000000\",\n  \"email\": \"contact@example.com\",\n  \"website\": \"\",\n  \"socialLinks\": {},\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Sửa",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/businesses/{{businessId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Cơ sở OCOP\",\n  \"introduction\": \"Giới thiệu\",\n  \"representative\": \"Người đại diện\",\n  \"phone\": \"0900000000\",\n  \"email\": \"contact@example.com\",\n  \"website\": \"\",\n  \"socialLinks\": {},\n  \"active\": true,\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Thành viên",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/businesses/{{businessId}}/members"
+          }
+        },
+        {
+          "name": "Gán thành viên",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{baseUrl}}/businesses/{{businessId}}/members/{{userId}}"
+          }
+        },
+        {
+          "name": "Gỡ thành viên",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/businesses/{{businessId}}/members/{{userId}}"
+          }
+        },
+        {
+          "name": "Thư viện",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/businesses/{{businessId}}/media"
+          }
+        },
+        {
+          "name": "Gắn tài nguyên",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/businesses/{{businessId}}/media",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"mediaIds\": [\n    \"{{mediaId}}\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Danh mục",
+      "item": [
+        {
+          "name": "areas - danh sách",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/catalogs/areas"
+          }
+        },
+        {
+          "name": "areas - tạo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/catalogs/areas",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Danh mục thử\",\n  \"code\": \"TEST\",\n  \"slug\": \"danh-muc-thu\",\n  \"iconUrl\": \"/icons/test.svg\",\n  \"colorHex\": \"#24823C\",\n  \"sortOrder\": 0,\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "areas - sửa",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/catalogs/areas/{{catalogId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Danh mục thử\",\n  \"code\": \"TEST\",\n  \"slug\": \"danh-muc-thu\",\n  \"iconUrl\": \"/icons/test.svg\",\n  \"colorHex\": \"#24823C\",\n  \"sortOrder\": 0,\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "areas - xóa",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/catalogs/areas/{{catalogId}}"
+          }
+        },
+        {
+          "name": "product-types - danh sách",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/catalogs/product-types"
+          }
+        },
+        {
+          "name": "product-types - tạo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/catalogs/product-types",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Danh mục thử\",\n  \"code\": \"TEST\",\n  \"slug\": \"danh-muc-thu\",\n  \"iconUrl\": \"/icons/test.svg\",\n  \"colorHex\": \"#24823C\",\n  \"sortOrder\": 0,\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "product-types - sửa",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/catalogs/product-types/{{catalogId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Danh mục thử\",\n  \"code\": \"TEST\",\n  \"slug\": \"danh-muc-thu\",\n  \"iconUrl\": \"/icons/test.svg\",\n  \"colorHex\": \"#24823C\",\n  \"sortOrder\": 0,\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "product-types - xóa",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/catalogs/product-types/{{catalogId}}"
+          }
+        },
+        {
+          "name": "poi-categories - danh sách",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/catalogs/poi-categories"
+          }
+        },
+        {
+          "name": "poi-categories - tạo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/catalogs/poi-categories",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Danh mục thử\",\n  \"code\": \"TEST\",\n  \"slug\": \"danh-muc-thu\",\n  \"iconUrl\": \"/icons/test.svg\",\n  \"colorHex\": \"#24823C\",\n  \"sortOrder\": 0,\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "poi-categories - sửa",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/catalogs/poi-categories/{{catalogId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Danh mục thử\",\n  \"code\": \"TEST\",\n  \"slug\": \"danh-muc-thu\",\n  \"iconUrl\": \"/icons/test.svg\",\n  \"colorHex\": \"#24823C\",\n  \"sortOrder\": 0,\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "poi-categories - xóa",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/catalogs/poi-categories/{{catalogId}}"
+          }
+        },
+        {
+          "name": "activities - danh sách",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/catalogs/activities"
+          }
+        },
+        {
+          "name": "activities - tạo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/catalogs/activities",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Danh mục thử\",\n  \"code\": \"TEST\",\n  \"slug\": \"danh-muc-thu\",\n  \"iconUrl\": \"/icons/test.svg\",\n  \"colorHex\": \"#24823C\",\n  \"sortOrder\": 0,\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "activities - sửa",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/catalogs/activities/{{catalogId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Danh mục thử\",\n  \"code\": \"TEST\",\n  \"slug\": \"danh-muc-thu\",\n  \"iconUrl\": \"/icons/test.svg\",\n  \"colorHex\": \"#24823C\",\n  \"sortOrder\": 0,\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "activities - xóa",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/catalogs/activities/{{catalogId}}"
+          }
+        },
+        {
+          "name": "amenities - danh sách",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/catalogs/amenities"
+          }
+        },
+        {
+          "name": "amenities - tạo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/catalogs/amenities",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Danh mục thử\",\n  \"code\": \"TEST\",\n  \"slug\": \"danh-muc-thu\",\n  \"iconUrl\": \"/icons/test.svg\",\n  \"colorHex\": \"#24823C\",\n  \"sortOrder\": 0,\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "amenities - sửa",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/catalogs/amenities/{{catalogId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Danh mục thử\",\n  \"code\": \"TEST\",\n  \"slug\": \"danh-muc-thu\",\n  \"iconUrl\": \"/icons/test.svg\",\n  \"colorHex\": \"#24823C\",\n  \"sortOrder\": 0,\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "amenities - xóa",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/catalogs/amenities/{{catalogId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Điểm bán",
+      "item": [
+        {
+          "name": "Danh sách",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/listings"
+          }
+        },
+        {
+          "name": "Tạo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/listings",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"poiId\": \"{{poiId}}\",\n  \"productId\": \"{{productId}}\",\n  \"priceVnd\": 150000,\n  \"stockQuantity\": 10,\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Sửa",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/listings/{{listingId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"poiId\": \"{{poiId}}\",\n  \"productId\": \"{{productId}}\",\n  \"priceVnd\": 150000,\n  \"stockQuantity\": 10,\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Ngừng bán",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/listings/{{listingId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Điểm dừng và đường đi",
+      "item": [
+        {
+          "name": "Điểm dừng",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/tours/{{tourId}}/stops"
+          }
+        },
+        {
+          "name": "Thay điểm dừng",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/tours/{{tourId}}/stops",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"stops\": [\n    {\n      \"poiId\": \"{{poiId}}\",\n      \"visitDurationMinutes\": 30\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Tuyến đường",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/tours/{{tourId}}/routes"
+          }
+        },
+        {
+          "name": "Lưu đoạn đường",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/tours/{{tourId}}/routes",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"fromStopId\": \"{{fromStopId}}\",\n  \"toStopId\": \"{{toStopId}}\",\n  \"travelMode\": \"DRIVING\",\n  \"pathCoordinates\": [\n    {\n      \"lat\": 16,\n      \"lng\": 108\n    },\n    {\n      \"lat\": 16.01,\n      \"lng\": 108.01\n    }\n  ],\n  \"distanceMeters\": 1500,\n  \"durationSeconds\": 300\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cloudinary",
+      "item": [
+        {
+          "name": "Cấp chữ ký",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/media/upload-signature",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"businessId\": \"{{businessId}}\",\n  \"resourceType\": \"image\",\n  \"altText\": \"Ảnh cơ sở\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Xác nhận tải lên",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{baseUrl}}/media/{{mediaId}}/complete"
+          }
+        },
+        {
+          "name": "Thư viện",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/media"
+          }
+        },
+        {
+          "name": "Nơi sử dụng",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/media/{{mediaId}}/usage"
+          }
+        },
+        {
+          "name": "Đổi mô tả",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/media/{{mediaId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"altText\": \"Mô tả mới\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Xóa nếu không được dùng",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/media/{{mediaId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Vận hành",
+      "item": [
+        {
+          "name": "Tổng quan",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/dashboard"
+          }
+        },
+        {
+          "name": "Người dùng",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/users"
+          }
+        },
+        {
+          "name": "Gán quyền",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/users/{{userId}}/roles",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roles\": [\n    \"CUSTOMER\",\n    \"PARTNER\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Khóa tài khoản",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/users/{{userId}}/status",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"UNACTIVE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Đơn hàng",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/orders"
+          }
+        },
+        {
+          "name": "Chi tiết đơn",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/orders/{{orderId}}"
+          }
+        },
+        {
+          "name": "Giao dòng hàng",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/orders/{{orderId}}/items/{{itemId}}/fulfillment",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"SHIPPED\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Admin chuyển trạng thái",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/orders/{{orderId}}/status",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"SHIPPED\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Tra thanh toán",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/payments?orderId={{orderId}}"
+          }
+        },
+        {
+          "name": "Đánh giá địa điểm",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/reviews/poi"
+          }
+        },
+        {
+          "name": "Đánh giá sản phẩm",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/reviews/product"
+          }
+        },
+        {
+          "name": "Kiểm duyệt đánh giá",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/reviews/poi/{{reviewId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"HIDDEN\",\n  \"reason\": \"Nội dung không phù hợp\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Lịch sử",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/audits"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Nhập Excel",
+      "item": [
+        {
+          "name": "Xem trước Excel",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{baseUrl}}/imports/pois/preview",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "mapping",
+                  "type": "text",
+                  "value": "{\"name\":\"Tên cơ sở\",\"address\":\"Địa chỉ\"}",
+                  "contentType": "application/json"
+                },
+                {
+                  "key": "defaults",
+                  "type": "text",
+                  "value": "{\"businessId\": \"{{businessId}}\", \"areaId\": \"{{areaId}}\", \"openingHours\": {}, \"categoryIds\": [], \"activityIds\": [], \"amenityIds\": []}",
+                  "contentType": "application/json"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Đọc bản xem trước",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/imports/{{importId}}"
+          }
+        },
+        {
+          "name": "Sửa dòng dữ liệu",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/imports/{{importId}}/rows",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\",\n  \"rows\": [\n    {\n      \"businessId\": \"{{businessId}}\",\n      \"areaId\": \"{{areaId}}\",\n      \"name\": \"Địa điểm OCOP\",\n      \"address\": \"Đà Nẵng\",\n      \"lat\": 16.05,\n      \"lng\": 108.2,\n      \"openingHours\": {},\n      \"categoryIds\": [],\n      \"activityIds\": [],\n      \"amenityIds\": []\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Xác nhận nhập",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/imports/{{importId}}/commit",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"{{version}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
